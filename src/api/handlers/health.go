@@ -2,6 +2,8 @@ package handlers
 
 import (
 	"net/http"
+
+	"github.com/aminesmkhani/go-clean/api/helper"
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,6 +16,10 @@ func NewHealthHandler() *HealthHandler{
 }
 
 func (h *HealthHandler)Health(ctx *gin.Context){
-	ctx.JSON(http.StatusOK, "Working!")
+	ctx.JSON(http.StatusOK,helper.GenerateBaseResponse(
+		"Working",
+		true,
+		0,
+	))
 			return
 }

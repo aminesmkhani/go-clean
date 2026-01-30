@@ -3,6 +3,7 @@ package handlers
 import (
 	"net/http"
 
+	"github.com/aminesmkhani/go-clean/api/helper"
 	"github.com/gin-gonic/gin"
 )
 
@@ -126,15 +127,11 @@ func (h *TestHandler) BinderBody(c *gin.Context){
 	p := personData{}
 	err := c.ShouldBindJSON(&p)
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"validationError" : err.Error(),
-		})
-		return
-	}
-	c.JSON(http.StatusOK, gin.H{
+		c.AbortWithStatusJSON(http.StatusBadRequest, helper.GenerateBaseResponseWithValidationError(nil,false,-1,err))}
+	c.JSON(http.StatusOK,helper.GenerateBaseResponse(gin.H{
 		"result": "BinderBody",
 		"data" : p,
-	})
+	},true,0))
 
 }
 func (h *TestHandler) BinderBody1(c *gin.Context){
