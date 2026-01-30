@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 
+	"github.com/aminesmkhani/go-clean/api/middlewares"
 	"github.com/aminesmkhani/go-clean/api/routers"
 	validation "github.com/aminesmkhani/go-clean/api/validations"
 	"github.com/aminesmkhani/go-clean/config"
@@ -21,7 +22,7 @@ func InitServer() {
 		val.RegisterValidation("mobile",validation.IranianMobileNumberValidator,true)
 	}
 
-	r.Use(gin.Logger(), gin.Recovery())
+	r.Use(gin.Logger(), gin.Recovery(),middlewares.LimitByRequest())
 	api := r.Group("/api")
 
 	v1 := api.Group("/v1")
