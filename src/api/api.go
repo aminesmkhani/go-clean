@@ -4,13 +4,23 @@ import (
 	"fmt"
 
 	"github.com/aminesmkhani/go-clean/api/routers"
+	validation "github.com/aminesmkhani/go-clean/api/validations"
 	"github.com/aminesmkhani/go-clean/config"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/go-playground/validator/v10"
 )
 
 func InitServer() {
 	cfg := config.GetConfig()
 	r := gin.New()
+
+	// Register custom Validator!
+	val, ok := binding.Validator.Engine().(*validator.Validate)
+	if ok {
+		val.RegisterValidation("mobile",validation.IranianMobileNumberValidator,true)
+	}
+
 	r.Use(gin.Logger(), gin.Recovery())
 	api := r.Group("/api")
 
