@@ -1,6 +1,6 @@
 module github.com/aminesmkhani/go-clean
 
-go 1.25.5
+go 1.25
 
 require (
 	github.com/didip/tollbooth v4.0.2+incompatible
