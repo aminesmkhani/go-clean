@@ -8,6 +8,9 @@ import (
 	"github.com/aminesmkhani/go-clean/data/cache"
 	"github.com/aminesmkhani/go-clean/data/db"
 )
+// @securityDefinitions.apiKey AuthBearer
+// @in header
+// @name Authorization
 
 func main(){
 	cfg := config.GetConfig()
