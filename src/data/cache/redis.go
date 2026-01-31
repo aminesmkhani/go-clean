@@ -1,7 +1,9 @@
 package cache
 
 import (
+	"context"
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/aminesmkhani/go-clean/config"
@@ -15,7 +17,7 @@ var redisClient *redis.Client
 
 
 
-func InitRedis(cfg *config.Config){
+func InitRedis(cfg *config.Config) error{
 	redisClient = redis.NewClient(&redis.Options{
 		Addr: fmt.Sprintf("%s:%s",cfg.Redis.Host,cfg.Redis.Port),
 		Password: cfg.Redis.Password,
@@ -28,6 +30,17 @@ func InitRedis(cfg *config.Config){
 		ConnMaxIdleTime: 500 * time.Millisecond,
 		MaxRetries:      3,
 	})
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	_, err := redisClient.Ping(ctx).Result()
+	if err != nil {
+		return fmt.Errorf("failed to connect to Redis: %w", err)
+	}
+
+	log.Println("Successfully connected to Redis")
+	return nil
 }
 
 func GetRedis() *redis.Client{
