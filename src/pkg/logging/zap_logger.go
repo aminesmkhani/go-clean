@@ -59,7 +59,7 @@ func (l *zapLogger) Init() {
 }
 
 func (l *zapLogger) Debug(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{}) {
-	l.logger.Debugw(msg,)
+	l.logger.Debugw(msg)
 }
 
 func (l *zapLogger) Debugf(template string, args ...interface{}) {
