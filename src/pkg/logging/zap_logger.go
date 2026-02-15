@@ -63,10 +63,44 @@ func (l *zapLogger) Debug(cat Category, sub SubCategory, msg string, extra map[E
 	l.logger.Debugw(msg, params...)
 }
 
-
-
 func (l *zapLogger) Debugf(template string, args ...interface{}) {
 	l.logger.Debugf(template,args)
+}
+
+func (l *zapLogger) Info(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{}) {
+	params := prepareLogKeys(extra, cat, sub)
+	l.logger.Infow(msg, params...)
+}
+
+func (l *zapLogger) Infof(template string, args ...interface{}) {
+	l.logger.Infof(template,args)
+}
+
+func (l *zapLogger) Warn(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{}) {
+	params := prepareLogKeys(extra, cat, sub)
+	l.logger.Warnw(msg, params...)
+}
+
+func (l *zapLogger) Warnf(template string, args ...interface{}) {
+	l.logger.Warnf(template,args)
+}
+
+func (l *zapLogger) Error(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{}) {
+	params := prepareLogKeys(extra, cat, sub)
+	l.logger.Errorw(msg, params...)
+}
+
+func (l *zapLogger) Errorf(template string, args ...interface{}) {
+	l.logger.Errorf(template,args)
+}
+
+func (l *zapLogger) Fatal(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{}) {
+	params := prepareLogKeys(extra, cat, sub)
+	l.logger.Fatalw(msg, params...)
+}
+
+func (l *zapLogger) Fatalf(template string, args ...interface{}) {
+	l.logger.Fatalf(template,args)
 }
 
 
