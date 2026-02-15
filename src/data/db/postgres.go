@@ -2,16 +2,17 @@ package db
 
 import (
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/aminesmkhani/go-clean/config"
+	"github.com/aminesmkhani/go-clean/pkg/logging"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 
 var dbClient *gorm.DB
+var logger = logging.NewLogger(config.GetConfig()) 
 
 
 
@@ -39,7 +40,7 @@ func InitDB(cfg *config.Config) error{
 	sqlDb.SetMaxOpenConns(cfg.Postgres.MaxOpenConns)
 	sqlDb.SetConnMaxLifetime(cfg.Postgres.ConnMaxLifetime * time.Minute)
 
-	log.Println("Db Connection established")
+	logger.Info(logging.Postgres,logging.Startup,"DB Connection established",nil)
 	return nil
 }
 

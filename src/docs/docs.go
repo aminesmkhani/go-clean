@@ -32,13 +32,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_aminesmkhani_go-clean_api_helper.BaseHttpResponse"
                         }
                     },
                     "400": {
                         "description": "Failed",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_aminesmkhani_go-clean_api_helper.BaseHttpResponse"
                         }
                     }
                 }
@@ -46,7 +46,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "helper.BaseHttpResponse": {
+        "github_com_aminesmkhani_go-clean_api_helper.BaseHttpResponse": {
             "type": "object",
             "properties": {
                 "error": {},
@@ -60,12 +60,12 @@ const docTemplate = `{
                 "validationErrors": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/validation.ValidationError"
+                        "$ref": "#/definitions/github_com_aminesmkhani_go-clean_api_validations.ValidationError"
                     }
                 }
             }
         },
-        "validation.ValidationError": {
+        "github_com_aminesmkhani_go-clean_api_validations.ValidationError": {
             "type": "object",
             "properties": {
                 "message": {

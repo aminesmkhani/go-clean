@@ -1,5 +1,5 @@
 definitions:
-  helper.BaseHttpResponse:
+  github_com_aminesmkhani_go-clean_api_helper.BaseHttpResponse:
     properties:
       error: {}
       result: {}
@@ -9,10 +9,10 @@ definitions:
         type: boolean
       validationErrors:
         items:
-          $ref: '#/definitions/validation.ValidationError'
+          $ref: '#/definitions/github_com_aminesmkhani_go-clean_api_validations.ValidationError'
         type: array
     type: object
-  validation.ValidationError:
+  github_com_aminesmkhani_go-clean_api_validations.ValidationError:
     properties:
       message:
         type: string
@@ -37,11 +37,11 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: '#/definitions/helper.BaseHttpResponse'
+            $ref: '#/definitions/github_com_aminesmkhani_go-clean_api_helper.BaseHttpResponse'
         "400":
           description: Failed
           schema:
-            $ref: '#/definitions/helper.BaseHttpResponse'
+            $ref: '#/definitions/github_com_aminesmkhani_go-clean_api_helper.BaseHttpResponse'
       summary: Health Check
       tags:
       - health
