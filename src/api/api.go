@@ -20,8 +20,10 @@ func InitServer(cfg *config.Config) {
 	// Register custom Validator!
 	RegisterValidators()
 
+	r.Use(middlewares.DefaultStructuredLogger(cfg))
 	r.Use(gin.Logger(), gin.Recovery(),middlewares.LimitByRequest())
 	r.Use(middlewares.Cors(cfg))
+	r.Use(middlewares.DefaultStructuredLogger(cfg))
 
 	// Register Routes
 	RegisterRoutes(r)
