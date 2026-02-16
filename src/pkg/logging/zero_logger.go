@@ -2,13 +2,15 @@ package logging
 
 import (
 	"os"
+	"sync"
 
 	"github.com/aminesmkhani/go-clean/config"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/pkgerrors"
-
 )
 	
+var once sync.Once
+var zeroSinLogger *zerolog.Logger
 
 type zeroLogger struct {
 	cfg    *config.Config
@@ -39,6 +41,7 @@ func (l *zeroLogger) getLogLevel() zerolog.Level {
 
 
 func (l *zeroLogger) Init() {
+	once.Do(func (){
 	zerolog.ErrorStackMarshaler = pkgerrors.MarshalStack
 	file, err := os.OpenFile(l.cfg.Logger.FilePath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
@@ -50,8 +53,10 @@ func (l *zeroLogger) Init() {
 		Str("AppName","MyApp").
 		Str("LoggerName","ZeroLog").
 		Logger()
-	zerolog.SetGlobalLevel(l.getLogLevel())
-	l.logger = &logger
+		zerolog.SetGlobalLevel(l.getLogLevel())
+		zeroSinLogger = &logger
+	})
+	l.logger = zeroSinLogger
 }
 
 
