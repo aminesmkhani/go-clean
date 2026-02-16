@@ -58,11 +58,14 @@ func (l *zapLogger) Init() {
 		zap.AddStacktrace(zapcore.ErrorLevel),
 	).Sugar()
 
+	logger = logger.With("AppName", "MyApp", "LoggerName", "ZapLog")
+
 	l.logger = logger
 }
 
 func (l *zapLogger) Debug(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{}) {
-	params := prepareLogKeys(extra, cat, sub)
+	params := prepareLogInfo(cat, sub, extra)
+
 	l.logger.Debugw(msg, params...)
 }
 
@@ -71,7 +74,7 @@ func (l *zapLogger) Debugf(template string, args ...interface{}) {
 }
 
 func (l *zapLogger) Info(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{}) {
-	params := prepareLogKeys(extra, cat, sub)
+	params := prepareLogInfo(cat, sub, extra)
 	l.logger.Infow(msg, params...)
 }
 
@@ -80,7 +83,7 @@ func (l *zapLogger) Infof(template string, args ...interface{}) {
 }
 
 func (l *zapLogger) Warn(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{}) {
-	params := prepareLogKeys(extra, cat, sub)
+	params := prepareLogInfo(cat, sub, extra)
 	l.logger.Warnw(msg, params...)
 }
 
@@ -89,7 +92,7 @@ func (l *zapLogger) Warnf(template string, args ...interface{}) {
 }
 
 func (l *zapLogger) Error(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{}) {
-	params := prepareLogKeys(extra, cat, sub)
+	params := prepareLogInfo(cat, sub, extra)
 	l.logger.Errorw(msg, params...)
 }
 
@@ -98,7 +101,7 @@ func (l *zapLogger) Errorf(template string, args ...interface{}) {
 }
 
 func (l *zapLogger) Fatal(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{}) {
-	params := prepareLogKeys(extra, cat, sub)
+	params := prepareLogInfo(cat, sub, extra)
 	l.logger.Fatalw(msg, params...)
 }
 
@@ -106,12 +109,12 @@ func (l *zapLogger) Fatalf(template string, args ...interface{}) {
 	l.logger.Fatalf(template, args)
 }
 
-func prepareLogKeys(extra map[ExtraKey]interface{}, cat Category, sub SubCategory) []interface{} {
+func prepareLogInfo(cat Category, sub SubCategory, extra map[ExtraKey]interface{}) []interface{} {
 	if extra == nil {
-		extra = make(map[ExtraKey]interface{}, 0)
+		extra = make(map[ExtraKey]interface{})
 	}
 	extra["Category"] = cat
 	extra["SubCategory"] = sub
-	params := mapToZapParams(extra)
-	return params
+
+	return logParamsToZapParams(extra)
 }

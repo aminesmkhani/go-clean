@@ -6,6 +6,7 @@ import (
 	"github.com/aminesmkhani/go-clean/config"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/pkgerrors"
+
 )
 	
 
@@ -56,15 +57,81 @@ func (l *zeroLogger) Init() {
 
 
 func (l *zeroLogger) Debug(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{}) {
-	params := prepareLogKeys(extra, cat, sub)
+
 	l.logger.
-	Debug()
-	Str("category", string(cat)).
-	Str("subcategory", string(sub)).
-	Fields(params).
-	Msg(msg).
+		Debug().
+		Str("Category", string(cat)).
+		Str("SubCategory", string(sub)).
+		Fields(logParamsToZeroParams(extra)).
+		Msg(msg)
 }
 
 func (l *zeroLogger) Debugf(template string, args ...interface{}) {
-	l.logger.Debugf(template, args)
+	l.logger.
+		Debug().
+		Msgf(template, args...)
+}
+
+func (l *zeroLogger) Info(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{}) {
+
+	l.logger.
+		Info().
+		Str("Category", string(cat)).
+		Str("SubCategory", string(sub)).
+		Fields(logParamsToZeroParams(extra)).
+		Msg(msg)
+}
+
+func (l *zeroLogger) Infof(template string, args ...interface{}) {
+	l.logger.
+		Info().
+		Msgf(template, args...)
+}
+
+func (l *zeroLogger) Warn(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{}) {
+
+	l.logger.
+		Warn().
+		Str("Category", string(cat)).
+		Str("SubCategory", string(sub)).
+		Fields(logParamsToZeroParams(extra)).
+		Msg(msg)
+}
+
+func (l *zeroLogger) Warnf(template string, args ...interface{}) {
+	l.logger.
+		Warn().
+		Msgf(template, args...)
+}
+
+func (l *zeroLogger) Error(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{}) {
+
+	l.logger.
+		Error().
+		Str("Category", string(cat)).
+		Str("SubCategory", string(sub)).
+		Fields(logParamsToZeroParams(extra)).
+		Msg(msg)
+}
+
+func (l *zeroLogger) Errorf(template string, args ...interface{}) {
+	l.logger.
+		Error().
+		Msgf(template, args...)
+}
+
+func (l *zeroLogger) Fatal(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{}) {
+
+	l.logger.
+		Fatal().
+		Str("Category", string(cat)).
+		Str("SubCategory", string(sub)).
+		Fields(logParamsToZeroParams(extra)).
+		Msg(msg)
+}
+
+func (l *zeroLogger) Fatalf(template string, args ...interface{}) {
+	l.logger.
+		Fatal().
+		Msgf(template, args...)
 }
