@@ -52,3 +52,18 @@ func (l *zeroLogger) Init() {
 	zerolog.SetGlobalLevel(l.getLogLevel())
 	l.logger = &logger
 }
+
+
+
+func (l *zeroLogger) Debug(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{}) {
+	params := prepareLogKeys(extra, cat, sub)
+	l.logger.
+	Debug()
+	Str("category", string(cat)).
+	Str("subcategory", string(sub)).
+	Msg(msg).
+}
+
+func (l *zeroLogger) Debugf(template string, args ...interface{}) {
+	l.logger.Debugf(template, args)
+}
