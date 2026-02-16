@@ -61,6 +61,7 @@ func (l *zeroLogger) Debug(cat Category, sub SubCategory, msg string, extra map[
 	Debug()
 	Str("category", string(cat)).
 	Str("subcategory", string(sub)).
+	Fields(params).
 	Msg(msg).
 }
 
