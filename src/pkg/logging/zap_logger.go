@@ -7,7 +7,7 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-var logLevelMap = map[string]zapcore.Level{
+var zapLogLevelMap = map[string]zapcore.Level{
 	"debug": zapcore.DebugLevel,
 	"info":  zap.InfoLevel,
 	"warn":  zapcore.WarnLevel,
@@ -26,8 +26,8 @@ func newZapLogger(cfg *config.Config) *zapLogger {
 	return logger
 }
 
-func (l *zapLogger) getLogLevel() zapcore.Level{
-	level, exists := logLevelMap[l.cfg.Logger.Level]
+func (l *zapLogger) getLogLevel() zapcore.Level {
+	level, exists := zapLogLevelMap[l.cfg.Logger.Level]
 	if !exists {
 		return zapcore.DebugLevel
 	}
@@ -36,12 +36,12 @@ func (l *zapLogger) getLogLevel() zapcore.Level{
 
 func (l *zapLogger) Init() {
 	w := zapcore.AddSync(&lumberjack.Logger{
-		Filename: l.cfg.Logger.FilePath,
-		MaxSize: 1,
-		MaxAge: 5,
-		LocalTime: true,
+		Filename:   l.cfg.Logger.FilePath,
+		MaxSize:    1,
+		MaxAge:     5,
+		LocalTime:  true,
 		MaxBackups: 10,
-		Compress: true,
+		Compress:   true,
 	})
 
 	config := zap.NewProductionEncoderConfig()
@@ -54,10 +54,10 @@ func (l *zapLogger) Init() {
 	)
 
 	logger := zap.New(core, zap.AddCaller(),
-			zap.AddCallerSkip(1),
-			zap.AddStacktrace(zapcore.ErrorLevel),
-		).Sugar()
-		
+		zap.AddCallerSkip(1),
+		zap.AddStacktrace(zapcore.ErrorLevel),
+	).Sugar()
+
 	l.logger = logger
 }
 
@@ -67,7 +67,7 @@ func (l *zapLogger) Debug(cat Category, sub SubCategory, msg string, extra map[E
 }
 
 func (l *zapLogger) Debugf(template string, args ...interface{}) {
-	l.logger.Debugf(template,args)
+	l.logger.Debugf(template, args)
 }
 
 func (l *zapLogger) Info(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{}) {
@@ -76,7 +76,7 @@ func (l *zapLogger) Info(cat Category, sub SubCategory, msg string, extra map[Ex
 }
 
 func (l *zapLogger) Infof(template string, args ...interface{}) {
-	l.logger.Infof(template,args)
+	l.logger.Infof(template, args)
 }
 
 func (l *zapLogger) Warn(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{}) {
@@ -85,7 +85,7 @@ func (l *zapLogger) Warn(cat Category, sub SubCategory, msg string, extra map[Ex
 }
 
 func (l *zapLogger) Warnf(template string, args ...interface{}) {
-	l.logger.Warnf(template,args)
+	l.logger.Warnf(template, args)
 }
 
 func (l *zapLogger) Error(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{}) {
@@ -94,7 +94,7 @@ func (l *zapLogger) Error(cat Category, sub SubCategory, msg string, extra map[E
 }
 
 func (l *zapLogger) Errorf(template string, args ...interface{}) {
-	l.logger.Errorf(template,args)
+	l.logger.Errorf(template, args)
 }
 
 func (l *zapLogger) Fatal(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{}) {
@@ -103,12 +103,8 @@ func (l *zapLogger) Fatal(cat Category, sub SubCategory, msg string, extra map[E
 }
 
 func (l *zapLogger) Fatalf(template string, args ...interface{}) {
-	l.logger.Fatalf(template,args)
+	l.logger.Fatalf(template, args)
 }
-
-
-
-
 
 func prepareLogKeys(extra map[ExtraKey]interface{}, cat Category, sub SubCategory) []interface{} {
 	if extra == nil {
