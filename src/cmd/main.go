@@ -5,6 +5,7 @@ import (
 	"github.com/aminesmkhani/go-clean/config"
 	"github.com/aminesmkhani/go-clean/data/cache"
 	"github.com/aminesmkhani/go-clean/data/db"
+	"github.com/aminesmkhani/go-clean/data/db/migrations"
 	"github.com/aminesmkhani/go-clean/pkg/logging"
 )
 
@@ -26,6 +27,8 @@ func main(){
 	if err != nil {
 		logger.Fatal(logging.Postgres, logging.Startup, err.Error(),nil)
 	}
+
+	migrations.Up1()
 
 	api.InitServer(cfg)
 }
