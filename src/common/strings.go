@@ -107,11 +107,13 @@ func GeneratePassword() string {
 
 func GenerateOtp() string {
 	cfg := config.GetConfig()
-	rand.Seed(time.Now().UnixNano())
+	source := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(source)
 	min := int(math.Pow(10, float64(cfg.Otp.Digits-1)))   // 10^d-1 100000
 	max := int(math.Pow(10, float64(cfg.Otp.Digits)) - 1) // 999999 = 1000000 - 1 (10^d) -1
 
-	var num = rand.Intn(max-min) + min
+	var num = r.Intn(max-min) + min
+	
 	return strconv.Itoa(num)
 }
 
