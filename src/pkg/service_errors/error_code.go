@@ -11,7 +11,7 @@ const (
 	InvalidRefreshToken = "invalid refresh token"
 
 	// OTP
-	OptExists   = "Otp exists"
+	OtpExists   = "Otp exists"
 	OtpUsed     = "Otp used"
 	OtpNotValid = "Otp invalid"
 
