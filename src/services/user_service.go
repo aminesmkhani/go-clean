@@ -1,6 +1,8 @@
 package services
 
 import (
+	"github.com/aminesmkhani/go-clean/api/dto"
+	"github.com/aminesmkhani/go-clean/common"
 	"github.com/aminesmkhani/go-clean/config"
 	"github.com/aminesmkhani/go-clean/data/db"
 	"github.com/aminesmkhani/go-clean/pkg/logging"
@@ -30,4 +32,11 @@ func NewUserService(cfg *config.Config) *UserService {
 }
 
 
-func (s *UserService) SendOtp()
+func (s *UserService) SendOtp(req *dto.GetOtpRequest) error {
+		otp := common.GenerateOtp()
+		err := s.otpService.SetOtp(req.MobileNumber,otp)
+		if err != nil {
+			return err
+		}
+		return nil
+}
