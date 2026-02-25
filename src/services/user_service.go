@@ -28,3 +28,6 @@ func NewUserService(cfg *config.Config) *UserService {
 		otpService: NewOtpService(cfg),
 	}
 }
+
+
+func (s *UserService) SendOtp()
