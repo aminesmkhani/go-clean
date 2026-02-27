@@ -30,7 +30,6 @@ func NewUsersHandler(cfg *config.Config) *UsersHandler {
 // @Failure 400 {object} helper.BaseHttpResponse "Failed"
 // @Failure 409 {object} helper.BaseHttpResponse "Failed"
 // @Router /v1/users/send-otp [post]
-
 func (h *UsersHandler) SendOtp(c *gin.Context) error {
 	req := new(dto.GetOtpRequest)
 	err := c.ShouldBindBodyWithJSON(&req)

@@ -26,8 +26,7 @@ func InitServer(cfg *config.Config) {
 	r.Use(middlewares.DefaultStructuredLogger(cfg))
 
 	// Register Routes
-	RegisterRoutes(r)
-
+	RegisterRoutes(r,cfg)
 	// Register Swagger
 	RegisterSwagger(r,cfg)
 
@@ -36,16 +35,18 @@ func InitServer(cfg *config.Config) {
 
 
 
-func RegisterRoutes(r *gin.Engine) {
+func RegisterRoutes(r *gin.Engine,cfg *config.Config) {
 	api := r.Group("/api")
 
 	v1 := api.Group("/v1")
 	{
 		health := v1.Group("/health")
 		test_router := v1.Group("/test")
+		users := v1.Group("/users")
 
 		routers.Health(health)
 		routers.TestRouter(test_router)
+		routers.User(users,cfg)
 	}
 
 	v2 := api.Group("/v2")

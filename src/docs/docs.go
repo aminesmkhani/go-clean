@@ -43,9 +43,68 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/v1/users/send-otp": {
+            "post": {
+                "description": "Send Secure otp to user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Sent otp to user",
+                "parameters": [
+                    {
+                        "description": "GetOtpRequest",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_aminesmkhani_go-clean_api_dto.GetOtpRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_aminesmkhani_go-clean_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_aminesmkhani_go-clean_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Failed",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_aminesmkhani_go-clean_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "github_com_aminesmkhani_go-clean_api_dto.GetOtpRequest": {
+            "type": "object",
+            "required": [
+                "mobileNumber"
+            ],
+            "properties": {
+                "mobileNumber": {
+                    "type": "string",
+                    "maxLength": 11,
+                    "minLength": 11
+                }
+            }
+        },
         "github_com_aminesmkhani_go-clean_api_helper.BaseHttpResponse": {
             "type": "object",
             "properties": {
